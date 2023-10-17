@@ -16,7 +16,6 @@ intents.message_content = True
 
 client = nextcord.Client(intents=intents)
 taliServerID = 792511515574927452
-channelID = 834528598379593728
 prefix = 'i blame'
 reaction_word = 'talibot'
 reaction_emoji = '👀'
