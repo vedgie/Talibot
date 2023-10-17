@@ -1,3 +1,7 @@
+# I worked too hard on this for what it's worth
+# But I did want to learn discord bots so this was a good tutorial
+# ur mum lole
+
 import nextcord
 from datetime import datetime
 import os
@@ -11,7 +15,7 @@ intents.messages = True
 intents.message_content = True
 
 client = nextcord.Client(intents=intents)
-taliServerID = 1159668784785788969
+taliServerID = 792511515574927452
 channelID = 834528598379593728
 prefix = 'i blame'
 reaction_word = 'talibot'
