@@ -1,6 +1,4 @@
 import nextcord
-from nextcord import Interaction
-from nextcord.ext import commands
 from datetime import datetime
 import os
 from dotenv import load_dotenv
