@@ -20,6 +20,7 @@ channelID = 834528598379593728
 prefix = 'i blame'
 reaction_word = 'talibot'
 reaction_emoji = '👀'
+custom_emoji_name = 'NODDERS'
 
 @client.event
 async def on_ready():
@@ -35,7 +36,8 @@ async def on_message(message):
 
         if message.content.lower().startswith(prefix.lower()):
             print("Attempting to send response")
-            await message.channel.send(':NODDERS:')
+            custom_emoji = nextcord.utils.get(message.guild.emojis, name=custom_emoji_name)
+            await message.channel.send(str(custom_emoji))
 
     if reaction_word.lower() in message.content.lower():
         await message.add_reaction(reaction_emoji)
