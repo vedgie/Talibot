@@ -5,6 +5,8 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 intents = nextcord.Intents.default()
 intents.members = True
 intents.messages = True
@@ -25,17 +27,15 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # if message.content and message.channel.id == 834528598379593728
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"{timestamp} | Author: {message.author.name} | Message: {message.content}")
+    if message.content and message.channel.id == 834528598379593728:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{timestamp} | Author: {message.author.name} | Message: {message.content}")
 
-    if message.content.lower().startswith(prefix.lower()):
-        print("Attempting to send response")
-        await message.channel.send(':NODDERS:')
+        if message.content.lower().startswith(prefix.lower()):
+            print("Attempting to send response")
+            await message.channel.send(':NODDERS:')
 
     if reaction_word.lower() in message.content.lower():
         await message.add_reaction(reaction_emoji)
   
-
-client.run('MTE2MTUxMDUyMDk3Nzg5NTUwNQ.GRwWX7.MKrqnFL7YixnV_hi0fq8sl1HPZQ1TpUWIBoCgA')
-
+client.run(os.getenv('BOT_TOKEN'))
