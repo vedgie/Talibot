@@ -18,7 +18,8 @@ client = nextcord.Client(intents=intents)
 taliServerID = 792511515574927452
 prefix = 'i blame'
 reaction_word = 'talibot'
-reaction_emoji = '👀'
+reaction_emoji1 = '👀'
+reaction_emoji2 = "🌭"
 custom_emoji_name = 'NODDERS'
 
 @client.event
@@ -38,7 +39,10 @@ async def on_message(message):
             custom_emoji = nextcord.utils.get(message.guild.emojis, name=custom_emoji_name)
             await message.channel.send(str(custom_emoji))
 
+    if message.author.name == 'mrtalidar' and message.channel.id ==  792638579792543745:
+        await message.add_reaction(reaction_emoji2)
+    
     if reaction_word.lower() in message.content.lower():
-        await message.add_reaction(reaction_emoji)
+        await message.add_reaction(reaction_emoji1)
   
 client.run(os.getenv('BOT_TOKEN'))
