@@ -24,7 +24,6 @@ reaction_emoji2 = "🌭"
 custom_emoji_name = 'NODDERS'
 
 def contains_url(text):
-    # Regular expression to check for URLs
     url_pattern = re.compile(r'https?://\S+|www\.\S+')
     return bool(url_pattern.search(text))
 
@@ -46,7 +45,7 @@ async def on_message(message):
             await message.channel.send(str(custom_emoji))
 
     if message.author.name == 'mrtalidar' and message.channel.id ==  792638579792543745:
-        if message.content and (message.attachments or message.embeds or contains_url(message.content)):
+        if message.attachments or message.embeds or contains_url(message.content):
             await message.add_reaction(reaction_emoji2)
     
     if reaction_word.lower() in message.content.lower():
