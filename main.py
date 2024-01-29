@@ -3,10 +3,12 @@
 # ur mum lole
 
 import nextcord
+from nextcord.ext import commands
 from datetime import datetime
 import os
 from dotenv import load_dotenv
 import re
+import random
 
 load_dotenv()
 
@@ -14,6 +16,7 @@ intents = nextcord.Intents.default()
 intents.members = True
 intents.messages = True
 intents.message_content = True
+intents.guilds = True
 
 client = nextcord.Client(intents=intents)
 taliServerID = 792511515574927452
@@ -30,7 +33,9 @@ def contains_url(text):
 @client.event
 async def on_ready():
     print("Bot is now active")
-    print(f"Connected to server with ID: {taliServerID}")
+    print("Guilds:")
+    for guild in client.guilds:
+        print(f"- {guild.name} (ID: {guild.id})")
     print("-------------------")
 
 @client.event
@@ -50,5 +55,35 @@ async def on_message(message):
     
     if reaction_word.lower() in message.content.lower():
         await message.add_reaction(reaction_emoji1)
-  
+
+    if isinstance(message.channel, nextcord.DMChannel) and message.author != client.user:
+        try:
+            channel_id, message_content = map(str.strip, message.content.split(maxsplit=1))
+            channel_id = int(channel_id)
+            channel = client.get_channel(channel_id)
+            if channel:
+                await channel.send(message_content)
+                await message.author.send(f"Message sent to <#{channel_id}> successfully!")
+            else:
+                await message.author.send(f"Channel with ID {channel_id} not found")
+        except ValueError:
+            await message.author.send("Invalid format. Please provide channel ID and message.")
+
+@client.slash_command(name="roll", description="Choose a die to roll")
+async def roll(interaction: nextcord.Interaction):
+    #
+    pass
+
+@roll.subcommand(name="custom", description="Custom die roll")
+async def customdie(interaction: nextcord.Interaction, die_number = int):
+  # Maybe validate and return some message?
+  die_size = int(die_number)
+  if die_size <=1 or die_size > 1000000:
+    await interaction.send(f"Don't put stupid numbers, you know what you did. Fuccin idiot.")
+    return
+
+  result = random.randint(1, die_size)
+  message = f"You rolled a {result}"
+  await interaction.send(message)
+
 client.run(os.getenv('BOT_TOKEN'))
