@@ -25,6 +25,9 @@ reaction_word = 'talibot'
 reaction_emoji1 = '👀'
 reaction_emoji2 = "🌭"
 custom_emoji_name = 'NODDERS'
+image_counter = 0
+post_amount = {}
+post_amount = random.randint(15, 20)
 
 def contains_url(text):
     url_pattern = re.compile(r'https?://\S+|www\.\S+')
@@ -68,6 +71,18 @@ async def on_message(message):
                 await message.author.send(f"Channel with ID {channel_id} not found")
         except ValueError:
             await message.author.send("Invalid format. Please provide channel ID and message.")
+    
+    if message.attachments or message.embeds or contains_url(message.content):
+            global image_counter
+            global post_amount
+            image_counter += 1
+            print(f"Image counter: {image_counter}")
+
+            if image_counter == post_amount:
+                image_counter = 0
+                post_amount = random.randint(15, 20)
+                print (f"Post Amount: {post_amount}")
+                await message.channel.send("Sheeeeesh")
 
 @client.slash_command(name="roll", description="Choose a die to roll")
 async def roll(interaction: nextcord.Interaction):
